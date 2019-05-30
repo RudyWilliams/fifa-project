@@ -1,6 +1,6 @@
 # Notes on the data_prep.py file
 
-The field names were first converted to lowercase and spaces were replaced with an underscore to make working with the data more comfortable.
+The field names were first converted to lowercase and spaces were replaced with an underscore to make working with the data more comfortable. The 48 players missing data for 'height' are missing data for all *skill* fields but still have some data on contracts.
 
 
 ### - Pooling smaller nation's players -
@@ -11,3 +11,6 @@ This column had 289 null values. To deal with these values, I replaced each nan 
 
 ### - Cleaning height column - 
 Exploring the data in the eda.py file we see that the data for this column is in the form ft'in. I converted this to be just in inches, switching from a str type to a float. There are 48 nans which I believe will be better to deal with within the player_from groups that will eventually form. 
+
+### - Cleaning the weight column
+Each entry has the trailing 'lbs' attached to it. Easy enough to clean. Again, the nans remain untouched.

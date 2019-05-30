@@ -165,8 +165,18 @@ def convert_to_inches(h_list):
 df['height'] = df['height'].str.split("'") #nans are still there
 df['height'] = df['height'].apply(convert_to_inches)
 
+#cleaning weight column
+def strip_lbs(w_string):
+    if type(w_string) == type(''):
+        return w_string[:-3]
+    else:
+        return w_string
+
+df['weight'] = df['weight'].apply(strip_lbs)
+
 #drop the old columns
 df = df.drop(['nationality', 'contract_valid_until'], axis=1)
+
 
 if __name__ == '__main__':
 
@@ -188,6 +198,12 @@ if __name__ == '__main__':
     # heights = df.loc[:,['id','height']].groupby('height').count()
     # print(heights)
     # print(heights.sum() + 48)
+
+    #check the weight column
+    # print(df['weight'])
+    weights = df.loc[:,['id','weight']].groupby('weight').count()
+    print(weights)
+    print(weights.sum() + 48)
 
     #check that columns have been dropped
     # print(df.info())

@@ -19,7 +19,8 @@ if __name__ == '__main__':
     # for i in lt100.index:
     #     with open('nations_lt100.txt', 'a') as f:
     #         f.write(f'{i},{lt100.loc[i,"num_players"]}\n')
-    ## those nations will have to be absorbed into a larger pool in the data prep file
+    ## those nations will have to be absorbed into 
+    ## a larger pool in the data prep file
     
     #check on nans
     print(per_col)
@@ -28,5 +29,11 @@ if __name__ == '__main__':
     ##  this col has 289 null values
 
     #check out the height column
-    print(df['Height'].isna().sum())
+    # print(df['Height'].isna().sum()) #there are 48 players without height
+    #can also be seen in per col
+    #the heights need to be split on ' with the first number 
+    #being multiplied by 12 and then + the inches number
+
+    #check out the weight column
+    print(df['Weight'].unique())
     pass
