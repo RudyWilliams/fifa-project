@@ -139,11 +139,12 @@ pool = {
     'Zambia': regions[3],
     'Zimbabwe': regions[3],
 }
+
 def convert_nationality(nationality):
     return pool[nationality] if nationality in pool.keys() else nationality
 
+#pool smaller nation's players and create new column
 df['player_from'] = df['nationality'].apply(convert_nationality)
-
 
 #cleaning contract_valid_until column
 #  first replace nans with 2019
@@ -153,7 +154,7 @@ df['contract_valid_until'] = df['contract_valid_until'].apply(lambda x: str(x)[:
 #  make new field that reflects years left in contract
 df['contract_years_left'] = df['contract_valid_until'].astype(int) - 2019
 
-
+#drop the old columns
 df = df.drop(['nationality', 'contract_valid_until'], axis=1)
 
 if __name__ == '__main__':
