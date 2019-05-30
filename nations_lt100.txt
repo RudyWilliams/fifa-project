@@ -1,0 +1,126 @@
+Afghanistan,4
+Albania,40
+Algeria,60
+Andorra,1
+Angola,15
+Antigua & Barbuda,4
+Armenia,10
+Azerbaijan,5
+Barbados,3
+Belarus,4
+Belize,1
+Benin,15
+Bermuda,2
+Bolivia,30
+Bosnia Herzegovina,61
+Botswana,1
+Bulgaria,32
+Burkina Faso,16
+Burundi,3
+Cameroon,90
+Canada,64
+Cape Verde,19
+Central African Rep.,3
+Chad,2
+Comoros,6
+Congo,25
+Costa Rica,30
+Cuba,4
+Curacao,14
+Cyprus,8
+DR Congo,52
+Dominican Republic,2
+Ecuador,43
+Egypt,31
+El Salvador,5
+Equatorial Guinea,5
+Eritrea,2
+Estonia,13
+Ethiopia,1
+FYR Macedonia,20
+Faroe Islands,6
+Fiji,1
+Finland,67
+Gabon,15
+Gambia,15
+Georgia,26
+Grenada,1
+Guam,1
+Guatemala,3
+Guinea,31
+Guinea Bissau,15
+Guyana,3
+Haiti,10
+Honduras,16
+Hong Kong,2
+Hungary,38
+Iceland,47
+India,30
+Indonesia,1
+Iran,17
+Iraq,7
+Israel,14
+Jamaica,32
+Jordan,1
+Kazakhstan,4
+Kenya,10
+Korea DPR,4
+Kosovo,33
+Kuwait,1
+Latvia,6
+Lebanon,1
+Liberia,1
+Libya,4
+Liechtenstein,3
+Lithuania,8
+Luxembourg,8
+Madagascar,12
+Mali,43
+Malta,1
+Mauritania,4
+Mauritius,1
+Moldova,5
+Montenegro,23
+Montserrat,4
+Morocco,85
+Mozambique,4
+Namibia,3
+New Caledonia,1
+New Zealand,44
+Nicaragua,2
+Niger,3
+Northern Ireland,80
+Oman,1
+Palestine,1
+Panama,15
+Paraguay,85
+Peru,37
+Philippines,2
+Puerto Rico,1
+Qatar,1
+Romania,54
+Russia,79
+Rwanda,1
+Sierra Leone,6
+Slovakia,54
+Slovenia,55
+South Africa,71
+South Sudan,1
+St Kitts Nevis,3
+St Lucia,1
+Sudan,3
+Suriname,4
+Syria,9
+São Tomé & Príncipe,1
+Tanzania,3
+Thailand,5
+Togo,12
+Trinidad & Tobago,4
+Tunisia,32
+Uganda,6
+Ukraine,73
+United Arab Emirates,1
+Uzbekistan,2
+Venezuela,67
+Zambia,9
+Zimbabwe,13
