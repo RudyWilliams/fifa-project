@@ -2,6 +2,8 @@ import pandas as pd
 import eda
 
 df = eda.df
+df.columns = df.columns.str.lower()
+df.columns = df.columns.str.replace(' ','_')
 
 #map countries with less than 100 players into a larger pool
 regions = ['South West Asia', 'West Africa', 'East Africa',
@@ -136,15 +138,41 @@ pool = {
     'Venezuela': regions[-3],
     'Zambia': regions[3],
     'Zimbabwe': regions[3],
-
 }
-
 def convert_nationality(nationality):
     return pool[nationality] if nationality in pool.keys() else nationality
 
-df['player_from'] = df['Nationality'].apply(convert_nationality)
+df['player_from'] = df['nationality'].apply(convert_nationality)
+
+
+#cleaning contract_valid_until column
+#  first replace nans with 2019
+df['contract_valid_until'] = df['contract_valid_until'].fillna(value='2019')
+#  next take first four numbers which will be the year
+df['contract_valid_until'] = df['contract_valid_until'].apply(lambda x: str(x)[:4])
+#  make new field that reflects years left in contract
+df['contract_years_left'] = df['contract_valid_until'].astype(int) - 2019
+
+
+df = df.drop(['nationality', 'contract_valid_until'], axis=1)
 
 if __name__ == '__main__':
-    print(df.tail(10))
-    
+
+    #shows that all years are in proper formatt of yyyy and all nans replaced
+    # contracts = df.loc[:,['id','contract_valid_until']].groupby('contract_valid_until').count()
+    # print(contracts)
+    # print(contracts.sum())
+
+
+    #shows that all years have been replaced
+    #comparing with above groupby output, it appears
+    #  all 2018->-1, 2019->0, etc
+    # years = df.loc[:,['id','contract_years_left']].groupby('contract_years_left').count()
+    # print(years)
+    # print(years.sum())
+
+
+    #check that columns have been dropped
+    # print(df.info())
+
     pass

@@ -19,9 +19,11 @@ if __name__ == '__main__':
     # for i in lt100.index:
     #     with open('nations_lt100.txt', 'a') as f:
     #         f.write(f'{i},{lt100.loc[i,"num_players"]}\n')
-
-    #those nations will have to be absorbed into a larger pool in the data prep file
-
+    ## those nations will have to be absorbed into a larger pool in the data prep file
+    
+    #check on nans
     print(per_col)
     ## id, name, age, nationality, overall, potential, ... have no nans
+    ## one of the columns needing cleaning is the contract valid until column
+    ##  this col has 289 null values
     pass
