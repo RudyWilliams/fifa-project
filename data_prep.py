@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import eda
 
 df = eda.df
@@ -154,6 +155,16 @@ df['contract_valid_until'] = df['contract_valid_until'].apply(lambda x: str(x)[:
 #  make new field that reflects years left in contract
 df['contract_years_left'] = df['contract_valid_until'].astype(int) - 2019
 
+#cleaning height column
+def convert_to_inches(h_list):
+    if type(h_list) == type(list()):
+        return int(h_list[0])*12 + int(h_list[1])
+    else:
+        return h_list
+
+df['height'] = df['height'].str.split("'") #nans are still there
+df['height'] = df['height'].apply(convert_to_inches)
+
 #drop the old columns
 df = df.drop(['nationality', 'contract_valid_until'], axis=1)
 
@@ -172,6 +183,11 @@ if __name__ == '__main__':
     # print(years)
     # print(years.sum())
 
+    #check height updates
+    # print(df.height)
+    # heights = df.loc[:,['id','height']].groupby('height').count()
+    # print(heights)
+    # print(heights.sum() + 48)
 
     #check that columns have been dropped
     # print(df.info())

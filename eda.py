@@ -26,4 +26,7 @@ if __name__ == '__main__':
     ## id, name, age, nationality, overall, potential, ... have no nans
     ## one of the columns needing cleaning is the contract valid until column
     ##  this col has 289 null values
+
+    #check out the height column
+    print(df['Height'].isna().sum())
     pass
