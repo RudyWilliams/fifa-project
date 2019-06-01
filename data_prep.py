@@ -151,9 +151,18 @@ df['player_from'] = df['nationality'].apply(convert_nationality)
 #  first replace nans with 2019
 df['contract_valid_until'] = df['contract_valid_until'].fillna(value='2019')
 #  next take first four numbers which will be the year
-df['contract_valid_until'] = df['contract_valid_until'].apply(lambda x: str(x)[:4])
-#  make new field that reflects years left in contract
-df['contract_years_left'] = df['contract_valid_until'].astype(int) - 2019
+df['contract_valid_until'] = df['contract_valid_until'].astype(str).apply(lambda x: str(x)[:4]).astype('int')
+
+
+#cleaning joined column - just take year
+#do want to fill nans but need to do it carfully
+isna = np.isnat(df.loc[:,'joined'])
+df.loc[isna, 'joined'] = df.loc[isna, 'contract_valid_until']
+df['joined'] = df['joined'].astype(str).apply(lambda x: x[:4]).astype('int')
+
+#consolidate the columns (these are consecutive years with club)
+df['years_with_club'] = df['contract_valid_until'] - df['joined'] + 1
+
 
 #cleaning height column
 def convert_to_inches(h_list):
@@ -175,24 +184,33 @@ def strip_lbs(w_string):
 df['weight'] = df['weight'].apply(strip_lbs)
 
 #drop the old columns
-df = df.drop(['nationality', 'contract_valid_until'], axis=1)
+# df = df.drop(['nationality', 'contract_valid_until'], axis=1)
 
 
 if __name__ == '__main__':
 
+    def create_groupby(df,col):
+        """use to efficiently create groupbys"""
+        return df.loc[:,['id', col]].groupby(col).count()
+
     #shows that all years are in proper formatt of yyyy and all nans replaced
-    # contracts = df.loc[:,['id','contract_valid_until']].groupby('contract_valid_until').count()
-    # print(contracts)
-    # print(contracts.sum())
+    contracts = create_groupby(df,'contract_valid_until')
+    print(contracts)
+    print(contracts.sum())
 
+    #check joined column
+    joins = create_groupby(df,'joined')
+    print(joins)
+    print(joins.sum())
+    ## running this with nans present and then after we see
+    ## that all nans are taken care of properly(-> 2019)
 
-    #shows that all years have been replaced
-    #comparing with above groupby output, it appears
-    #  all 2018->-1, 2019->0, etc
-    # years = df.loc[:,['id','contract_years_left']].groupby('contract_years_left').count()
-    # print(years)
-    # print(years.sum())
+    #check new column
+    ywclub = create_groupby(df,'years_with_club')
+    print(ywclub)
+    print(ywclub.sum())
 
+    # print(df[df['years_with_club'] == -1].loc[:,['joined','contract_valid_until']])
     #check height updates
     # print(df.height)
     # heights = df.loc[:,['id','height']].groupby('height').count()
@@ -201,11 +219,14 @@ if __name__ == '__main__':
 
     #check the weight column
     # print(df['weight'])
-    weights = df.loc[:,['id','weight']].groupby('weight').count()
-    print(weights)
-    print(weights.sum() + 48)
+    # weights = df.loc[:,['id','weight']].groupby('weight').count()
+    # print(weights)
+    # print(weights.sum() + 48)
 
     #check that columns have been dropped
     # print(df.info())
+
+    #spot checkning and everything appears good
+    print(df.loc[df['contract_valid_until']==2018, ['years_with_club','joined','contract_valid_until']])
 
     pass
