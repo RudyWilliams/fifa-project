@@ -36,4 +36,7 @@ if __name__ == '__main__':
 
     #check out the weight column
     print(df['Weight'].unique())
+
+    print(df.info())
+    ##joined column is in datetime format and there are 1553 missing values
     pass

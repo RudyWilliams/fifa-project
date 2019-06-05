@@ -147,17 +147,22 @@ def convert_nationality(nationality):
 #pool smaller nation's players and create new column
 df['player_from'] = df['nationality'].apply(convert_nationality)
 
+#dealing with missing values for 'contract_valid_until' & 'joined'
+contract_nans = pd.isna(df['contract_valid_until'])
+joined_nans = pd.isna(df['joined'])
+
+df.loc[(contract_nans & joined_nans), ['joined','contract_valid_until']] = '2019'
+df.loc[(joined_nans & (~contract_nans)), 'joined'] = (
+    df.loc[(joined_nans & (~contract_nans)), 'contract_valid_until'])
+df.loc[((~joined_nans) & contract_nans), 'contract_valid_until'] = (
+    df.loc[((~joined_nans) & contract_nans), 'joined'])
+
 #cleaning contract_valid_until column
-#  first replace nans with 2019
-df['contract_valid_until'] = df['contract_valid_until'].fillna(value='2019')
-#  next take first four numbers which will be the year
+##take first four numbers which will be the year
 df['contract_valid_until'] = df['contract_valid_until'].astype(str).apply(lambda x: str(x)[:4]).astype('int')
 
 
 #cleaning joined column - just take year
-#do want to fill nans but need to do it carfully
-isna = np.isnat(df.loc[:,'joined'])
-df.loc[isna, 'joined'] = df.loc[isna, 'contract_valid_until']
 df['joined'] = df['joined'].astype(str).apply(lambda x: x[:4]).astype('int')
 
 #consolidate the columns (these are consecutive years with club)
@@ -177,14 +182,14 @@ df['height'] = df['height'].apply(convert_to_inches)
 #cleaning weight column
 def strip_lbs(w_string):
     if type(w_string) == type(''):
-        return w_string[:-3]
+        return int(w_string[:-3])
     else:
         return w_string
 
 df['weight'] = df['weight'].apply(strip_lbs)
 
 #drop the old columns
-# df = df.drop(['nationality', 'contract_valid_until'], axis=1)
+df = df.drop(['nationality','contract_valid_until','joined','real_face','body_type'], axis=1)
 
 
 if __name__ == '__main__':
@@ -193,40 +198,47 @@ if __name__ == '__main__':
         """use to efficiently create groupbys"""
         return df.loc[:,['id', col]].groupby(col).count()
 
-    #shows that all years are in proper formatt of yyyy and all nans replaced
-    contracts = create_groupby(df,'contract_valid_until')
-    print(contracts)
-    print(contracts.sum())
+    # #shows that all years are in proper formatt of yyyy and all nans replaced
+    # contracts = create_groupby(df,'contract_valid_until')
+    # print(contracts)
+    # print(contracts.sum()) # = 18207 => no nans
 
-    #check joined column
-    joins = create_groupby(df,'joined')
-    print(joins)
-    print(joins.sum())
-    ## running this with nans present and then after we see
-    ## that all nans are taken care of properly(-> 2019)
+    # # #check joined column
+    # joins = create_groupby(df,'joined')
+    # print(joins)
+    # print(joins.sum())
+  
+    # #check new column
+    # ywclub = create_groupby(df,'years_with_club')
+    # print(ywclub)
+    # print(ywclub.sum())
 
-    #check new column
-    ywclub = create_groupby(df,'years_with_club')
-    print(ywclub)
-    print(ywclub.sum())
+    # print(df.loc[:,['joined','contract_valid_until','years_with_club']])
+    ##this spot check shows that the calcutation is working as expected
 
-    # print(df[df['years_with_club'] == -1].loc[:,['joined','contract_valid_until']])
+
     #check height updates
-    # print(df.height)
-    # heights = df.loc[:,['id','height']].groupby('height').count()
+    # heights = create_groupby(df, 'height')
     # print(heights)
-    # print(heights.sum() + 48)
+    # print(heights.sum() + 48) # = 18207 => 48 NaNs
+    # #copy paste and place above the cleaning of height: 
+    # # print(df.loc[:,['id','height']].groupby('height').count())
+    # #comparing the two groupbys is a quick check to see that 
+    # #the cleaning went as planned
 
     #check the weight column
-    # print(df['weight'])
-    # weights = df.loc[:,['id','weight']].groupby('weight').count()
+    # weights = create_groupby(df, 'weight')
     # print(weights)
     # print(weights.sum() + 48)
+    # #copy paste and place above the cleaning of weight: 
+    # # print(df.loc[:,['id','weight']].groupby('weight').count())
+    # #comparing the two groupbys is a quick check to see that 
+    # #the cleaning went as planned
 
     #check that columns have been dropped
-    # print(df.info())
+    print(df.info())
 
     #spot checkning and everything appears good
-    print(df.loc[df['contract_valid_until']==2018, ['years_with_club','joined','contract_valid_until']])
+    # print(df.loc[df['contract_valid_until']==2018, ['years_with_club','joined','contract_valid_until']])
 
     pass
