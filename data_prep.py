@@ -191,6 +191,20 @@ df['weight'] = df['weight'].apply(strip_lbs)
 #drop the old columns
 df = df.drop(['nationality','contract_valid_until','joined','real_face','body_type'], axis=1)
 
+#strip the money sign and use M or K to determine the factor
+def strip_value(value):
+    """remove '€' sign unless 0 (otherwise 0 -> nan)"""
+    factors = {'M': 1000000, 'K': 1000}
+    if value == 0:
+        return value
+    else:
+        value = value.lstrip('€')
+        value = float(value[:-1]) * factors[value[-1]]
+        return value
+        
+df['value'] = df['value'].apply(strip_value)
+df['wage'] = df['wage'].apply(strip_value)
+
 
 if __name__ == '__main__':
 
@@ -238,7 +252,9 @@ if __name__ == '__main__':
     #check that columns have been dropped
     print(df.info())
 
-    #spot checkning and everything appears good
+    #spot checking and everything appears good
     # print(df.loc[df['contract_valid_until']==2018, ['years_with_club','joined','contract_valid_until']])
 
+    #spot checking value/wage
+    # print(df['value'])
     pass

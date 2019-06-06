@@ -17,3 +17,6 @@ Exploring the data in the eda.py file we see that the data for this column is in
 
 ### - Cleaning the weight column
 Each entry has the trailing 'lbs' attached to it. Easy enough to clean. Again, the nans remain untouched.
+
+### - Cleaning value and wage column -
+There are no nans in these columns. The eda.py file shows that only 0s disobey the expected format of €some_float('M' or 'K'). This is easily cleaned up with the function strip_value() in the module. This converts the two columns from strings to floats.

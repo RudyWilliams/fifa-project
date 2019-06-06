@@ -23,7 +23,7 @@ if __name__ == '__main__':
     ## a larger pool in the data prep file
     
     #check on nans
-    # print(per_col)
+    print(per_col)
     ## id, name, age, nationality, overall, potential, ... have no nans
     ## one of the columns needing cleaning is the contract valid until column
     ##  this col has 289 null values
@@ -40,9 +40,12 @@ if __name__ == '__main__':
     # print(df.info())
     ##joined column is in datetime format and there are 1553 missing values
     
-    beg_unformatted = set([i for i in df['Value'] if not(str(i).startswith('€'))])
-    print(beg_unformatted) #shows that anything not starting with euro sign is a 0 
-
-    end_unformatted = set([i for i in df['Value'] if not(str(i).endswith(('M','K')))])
-    print(end_unformatted) #shows that anything not ending with M or K is a zero
+    def check_format(money_column):
+        return (set([i for i in df[money_column] if not(str(i).startswith('€'))]), 
+                set([i for i in df[money_column] if not(str(i).endswith(('M','K')))]))
+    
+    sign, factor = check_format('Wage') #when running with value or age we see
+    print(sign)                         #that only 0s dont comply
+    print(factor)
+        
     pass
