@@ -205,6 +205,8 @@ def strip_value(value):
 df['value'] = df['value'].apply(strip_value)
 df['wage'] = df['wage'].apply(strip_value)
 
+df['release_clause'] = df['release_clause'].fillna(value=0)
+df['release_clause'] = df['release_clause'].apply(strip_value)
 
 if __name__ == '__main__':
 
@@ -250,11 +252,18 @@ if __name__ == '__main__':
     # #the cleaning went as planned
 
     #check that columns have been dropped
-    print(df.info())
+    # print(df.info())
 
     #spot checking and everything appears good
     # print(df.loc[df['contract_valid_until']==2018, ['years_with_club','joined','contract_valid_until']])
 
     #spot checking value/wage
     # print(df['value'])
+
+    #checking release_clause
+    rcs = create_groupby(df, 'release_clause')
+    print(rcs.loc[rcs['id']==58,:])
+    print(rcs.sum()) #see all the nans turned into 0s
+    #spot check looks good
+    
     pass

@@ -44,8 +44,8 @@ if __name__ == '__main__':
         return (set([i for i in df[money_column] if not(str(i).startswith('€'))]), 
                 set([i for i in df[money_column] if not(str(i).endswith(('M','K')))]))
     
-    sign, factor = check_format('Wage') #when running with value or age we see
-    print(sign)                         #that only 0s dont comply
-    print(factor)
+    sign, factor = check_format('Release Clause') 
+    print(sign)   #when running with value, wage, or release clause we see                      
+    print(factor) #that only 0s dont comply for value and wage & nan for r. c.
         
     pass

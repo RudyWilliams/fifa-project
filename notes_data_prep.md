@@ -20,3 +20,6 @@ Each entry has the trailing 'lbs' attached to it. Easy enough to clean. Again, t
 
 ### - Cleaning value and wage column -
 There are no nans in these columns. The eda.py file shows that only 0s disobey the expected format of €some_float('M' or 'K'). This is easily cleaned up with the function strip_value() in the module. This converts the two columns from strings to floats.
+
+### - Cleaning release_clause column -
+While running the eda.py script we see that release_clause has 1564 nans, and these are the only values violating the expected format (same format as value and wage). We fill these with 0 since not having a release clause amounts to having a release clause of 0. We perform a groupby to see that there are 1564 0s now in release_clauses (i.e. the nans where all transformed properly). The same strip_value()function is applied to the column to clean it.
