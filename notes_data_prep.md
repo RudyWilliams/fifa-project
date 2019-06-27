@@ -23,3 +23,6 @@ There are no nans in these columns. The eda.py file shows that only 0s disobey t
 
 ### - Cleaning release_clause column -
 While running the eda.py script we see that release_clause has 1564 nans, and these are the only values violating the expected format (same format as value and wage). We fill these with 0 since not having a release clause amounts to having a release clause of 0. We perform a groupby to see that there are 1564 0s now in release_clauses (i.e. the nans where all transformed properly). The same strip_value()function is applied to the column to clean it.
+
+### - Cleaning work_rate column -
+This column has 48 null values. The format is of attacking-work-rate/[space]defending-work-rate. There are three levels for each side: High, Medium, and Low. This totals to 9 possible configs. I just removed this column for now. Information should be captured in the ratings.

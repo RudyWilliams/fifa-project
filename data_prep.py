@@ -126,7 +126,7 @@ pool = {
     'Sudan': regions[2],
     'Suriname': regions[-3],
     'Syria': regions[0],
-    #S�o Tom� & Pr�ncipe: regions[],
+    'São Tomé & Príncipe': regions[1],
     'Tanzania': regions[2],
     'Thailand': regions[6],
     'Togo': regions[1],
@@ -189,7 +189,8 @@ def strip_lbs(w_string):
 df['weight'] = df['weight'].apply(strip_lbs)
 
 #drop the old columns
-df = df.drop(['nationality','contract_valid_until','joined','real_face','body_type'], axis=1)
+df = df.drop(['nationality','contract_valid_until','joined',
+              'real_face','body_type','work_rate'], axis=1)
 
 #strip the money sign and use M or K to determine the factor
 def strip_value(value):
@@ -261,9 +262,18 @@ if __name__ == '__main__':
     # print(df['value'])
 
     #checking release_clause
-    rcs = create_groupby(df, 'release_clause')
-    print(rcs.loc[rcs['id']==58,:])
-    print(rcs.sum()) #see all the nans turned into 0s
-    #spot check looks good
+    # rcs = create_groupby(df, 'release_clause')
+    # print(rcs.loc[rcs['id']==58,:])
+    # print(rcs.sum()) #see all the nans turned into 0s
+    # #spot check looks good
+
+    #checking work_rate
+    # wrs = create_groupby(df,'work_rate')
+    # print(wrs)
+    df = df.drop(['id','name','club','preferred_foot','position','jersey_number'], axis=1)
+    grouped = df.groupby('player_from').mean()
     
+    #run once
+    # grouped.to_excel('means_feed_pca.xlsx')
+
     pass
