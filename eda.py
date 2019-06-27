@@ -47,5 +47,5 @@ if __name__ == '__main__':
     sign, factor = check_format('Release Clause') 
     print(sign)   #when running with value, wage, or release clause we see                      
     print(factor) #that only 0s dont comply for value and wage & nan for r. c.
-        
+    
     pass
